@@ -232,7 +232,7 @@ export const updateRegisterController = async (req, res, next) => {
 export const deleteRegisterController = async (req, res, next) => {
   try {
     let id = req.params._id;
-    let result = await Register.findById(id);
+    let result = await Register.findByIdAndDelete(id);
     res.status(200).json({
       success: true,
       message: "user delete successfully",

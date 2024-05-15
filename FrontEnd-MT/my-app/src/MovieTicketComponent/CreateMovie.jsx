@@ -11,12 +11,12 @@ const CreateMovie = () => {
     try {
       let output = await apiHit({
         method: "post",
-        url: "/movie-tickets",
+        url: "/movies",
         data: values,
       });
       // console.log(output, "******");
       toast(output.data.message);
-      navigate("/movie-tickets");
+      navigate("/movies");
     } catch (error) {
       console.log(error.message);
     }
