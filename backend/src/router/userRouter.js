@@ -2,19 +2,21 @@ import { Router } from "express";
 import {
   createUser,
   deleteUser,
-  getAllUser,
+  getAllUsers,
+  getBookingOfUser,
   loginUser,
   readSpecificUser,
   updateUser,
-  verifyEmailUser,
+  verifyEmailUser
 } from "../controller/userController.js";
 
 const userRouter = Router();
 
-userRouter.route("/").get(getAllUser);
+userRouter.route("/").get(getAllUsers);
 userRouter.route("/signup").post(createUser);
 userRouter.route("/verify-emails").patch(verifyEmailUser);
 userRouter.route("/login").post(loginUser);
+userRouter.route("/bookings/:id").get(getBookingOfUser);
 
 userRouter
   .route("/:id")

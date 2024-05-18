@@ -16,11 +16,10 @@ const userSchema = Schema(
       required: true,
       minLength: 6,
     },
-    addedMovies: [
+    bookings: [
       {
         type: mongoose.Types.ObjectId,
-        ref: "Movie",
-        required: true,
+        ref: "Booking",
       },
     ],
     isVerifyEmail: {

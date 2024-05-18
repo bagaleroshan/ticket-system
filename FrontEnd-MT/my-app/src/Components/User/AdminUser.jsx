@@ -9,3 +9,10 @@ const AdminUser = () => {
 }
 
 export default AdminUser
+// admin.jsx
+//try {
+//   console.log("admin", data);
+//   sendAdminAuthRequest(data.input).then(onResReceive);
+// } catch (err) {
+//   console.log(err);
+// }

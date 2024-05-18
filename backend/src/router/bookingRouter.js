@@ -1,11 +1,15 @@
 import express from "express";
-import { createBooking } from "../controller/bookingController.js";
+import {
+  deleteBooking,
+  getBookingById,
+  newBooking,
+} from "../controller/bookingController.js";
 const bookingRouter = express.Router();
-bookingRouter.route("/").post(createBooking )
-// movieRouter
-//   .route("/:id")
-//   .get(readSpecificMovie)
-//   .patch(updateMovie)
-//   .delete(deleteMovie);
+bookingRouter.route("/").post(newBooking);
+bookingRouter
+  .route("/:id")
+  .get(getBookingById)
+  //   .patch(updateMovie)
+  .delete(deleteBooking);
 
 export default bookingRouter;

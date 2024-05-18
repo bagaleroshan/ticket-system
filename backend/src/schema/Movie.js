@@ -1,3 +1,4 @@
+
 import mongoose, { Schema } from "mongoose";
 
 const movieSchema = Schema(
@@ -22,10 +23,10 @@ const movieSchema = Schema(
     feature: {
       type: Boolean,
     },
-    bookings: [{ type: String }],
+    bookings: [{ type: mongoose.Types.ObjectId, ref: "Booking" }],
     admin: {
       type: mongoose.Types.ObjectId,
-      ref: "User",
+      ref: "Admin",
       required: true,
     },
   },

@@ -4,12 +4,14 @@ import { getAllMovies } from "../api.helpers";
 import MovieItem from "./MovieItem";
 
 const Movies = () => {
-  const [result, setResult] = useState();
+  const [movie, setMovie] = useState();
   useEffect(() => {
     getAllMovies()
-      .then((data) => setResult(data.result))
+      .then((data) => setMovie(data.result))
       .catch((err) => console.log(err));
   }, []);
+  console.log(movie);
+
   return (
     <Box margin={"auto"} marginTop={4}>
       <Typography
@@ -32,14 +34,14 @@ const Movies = () => {
         justifyContent="center"
         flexWrap={"wrap"}
       >
-        {result &&
-          result.map((result, index) => (
+        {movie &&
+          movie.map((movie, index) => (
             <MovieItem
               key={index}
-              id={result.id}
-              posterUrl={result.posterUrl}
-              releaseDate={result.releaseDate}
-              title={result.title}
+              id={movie._id}
+              posterUrl={movie.posterUrl}
+              releaseDate={movie.releaseDate}
+              title={movie.title}
             ></MovieItem>
           ))}
       </Box>

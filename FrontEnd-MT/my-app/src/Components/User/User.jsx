@@ -1,13 +1,26 @@
 import React from "react";
-import UserForm from "./UserForm";
+import { useDispatch } from "react-redux";
+import { userActions } from "../../store/store";
 import { sendUserAuthRequest } from "../api.helpers";
+import UserForm from "./UserForm";
+import { useNavigate } from "react-router-dom";
 
 const User = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const onResReceive = (data) => {
+    console.log(data);
+    dispatch(userActions.login());
+    localStorage.setItem("userId", data.result._id);
+    // localStorage.setItem("token", data.token);
+    navigate("/");
+  };
   const getData = (data) => {
     console.log("user", data);
-    sendUserAuthRequest(data.input, data.signup).then((res) =>
-      console.log(res).catch((err) => console.log(err))
-    );
+    sendUserAuthRequest(data.input, data.signup)
+      .then(onResReceive)
+
+      .catch((err) => console.log(err));
   };
   return (
     <div>

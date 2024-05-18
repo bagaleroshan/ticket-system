@@ -112,7 +112,7 @@ export const loginUser = async (req, res, next) => {
   }
 };
 
-export const getAllUser = async (req, res, next) => {
+export const getAllUsers = async (req, res, next) => {
   try {
     let users = await User.find({});
     res.status(201).json({
@@ -180,6 +180,25 @@ export const deleteUser = async (req, res, next) => {
     });
   }
 };
+
+export const getBookingOfUser = async (req, res, next) => {
+  try {
+    let _id = req.params.id;
+    let users = await User.findById(_id);
+    res.status(200).json({
+      success: true,
+      message: "user read successfully.",
+      result: users,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+
 // //40 min
 // import { User } from "../schema/model.js";
 // export const createUser = async (req, res, next) => {
