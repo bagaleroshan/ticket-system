@@ -5,7 +5,7 @@ export const getAllMovies = async () => {
     .get("http://localhost:8000/movies")
     .catch((err) => console.log(err));
   if (res.status !== 200) {
-    return console.log("no data");
+    return console.log("NO Data");
   }
   const data = await res.data;
   return data;
@@ -13,7 +13,8 @@ export const getAllMovies = async () => {
 export const sendUserAuthRequest = async (data, signup) => {
   const res = await axios
     .post(`http://localhost:8000/users/${signup ? "signup" : "login"}`, {
-      name: data.name,
+      name: signup ? data.name : "",
+      // name:data.name,
       email: data.email,
       password: data.password,
     })
@@ -39,7 +40,9 @@ export const sendAdminAuthRequest = async (data) => {
 };
 
 export const getMovieDetails = async (id) => {
-  const res = await axios.get(`/movies/${id}`).catch((err) => console.log(err));
+  const res = await axios
+    .get(`http://localhost:8000/movies/${id}`)
+    .catch((err) => console.log(err));
   if (res.status !== 200) {
     return console.log("unexpected error");
   }
@@ -47,38 +50,64 @@ export const getMovieDetails = async (id) => {
   return resData;
 };
 
+// export const newBooking = async (data) => {
+//   const res = axios
+//     .post("http://localhost:8000/bookings", {
+//       movie: data.movie,
+//       seatNumber: data.seatNumber,
+//       date: data.date,
+//       user: localStorage.getItem("userId"),
+//     })
+//     .catch((err) => console.log(err));
+//   if (res.status !== 201) {
+//     return console.log("unexpected error");
+//   }
+//   const resData = await res.data;
+//   return resData;
+// };
+
 export const newBooking = async (data) => {
-  const res = axios
-    .post("/bookings", {
+  try {
+    const res = await axios.post("http://localhost:8000/bookings", {
       movie: data.movie,
       seatNumber: data.seatNumber,
       date: data.date,
       user: localStorage.getItem("userId"),
-    })
-    .catch((err) => console.log(err));
-  if (res.status !== 201) {
-    return console.log("unexpected error");
+    });
+
+    if (res.status !== 201) {
+      console.log("unexpected error");
+      return;
+    }
+
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    console.log("unexpected error");
   }
-  const resData = await res.data;
-  return resData;
 };
 
-export const getUserBooking = async () => {
-  const id = localStorage.getItem("userId");
-  const res = axios
-    .get(`/user/bookings/${id}`)
-    .catch((err) => console.log(err));
-  if (res.status !== 200) {
-    return console.log("unexpected error");
+export const getBookingOfUser = async () => {
+  try {
+    const id = localStorage.getItem("userId");
+    const res = await axios.get(`http://localhost:8000/users/bookings/${id}`);
+    // console.log(res);
+    if (res.status !== 200) {
+      console.log("unexpected error");
+      return;
+    }
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    console.log("unexpected error");
   }
-  const resData = await res.data;
-  return resData;
 };
 
 export const deleteBooking = async (id) => {
   const res = await axios
-    .delete(`/bookings/${id}`)
+    .delete(`http://localhost:8000/bookings/${id}`)
     .catch((err) => console.log(err));
+  console.log(res);
   if (res.status !== 200) {
     return console.log("unexpected error");
   }
@@ -88,7 +117,9 @@ export const deleteBooking = async (id) => {
 
 export const getUserDetails = async () => {
   const id = localStorage.getItem("userId");
-  const res = await axios.get(`/users/${id}`).catch((err) => console.log(err));
+  const res = await axios
+    .get(`http://localhost:8000/users/${id}`)
+    .catch((err) => console.log(err));
   if (res.status !== 200) {
     return console.log("unexpected error");
   }
@@ -98,7 +129,7 @@ export const getUserDetails = async () => {
 export const addMovies = async (data) => {
   const res = await axios
     .post(
-      "/movies",
+      "http://localhost:8000/movies",
       {
         title: data.title,
         description: data.description,
@@ -126,11 +157,17 @@ export const getAdminById = async (id) => {
   const adminId = localStorage.getItem("adminId");
 
   const res = await axios
-    .get(`/admins/${adminId}`)
+    .get(`http://localhost:8000/admins/${adminId}`)
     .catch((err) => console.log(err));
+  // console.log(res)
   if (res.status !== 200) {
     return console.log("unexpected error");
   }
   const resData = await res.data;
   return resData;
 };
+/*  const handelDelete = (id) => {
+    deleteBooking(id)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  }; */

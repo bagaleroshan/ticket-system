@@ -17,7 +17,7 @@ const UserForm = ({ onSubmit, isAdmin }) => {
     email: "",
     password: "",
   });
-  const [isSignup, setIsSignup] = useState(false);
+  const [isSignup, setIsSignup] = useState(true);
   const handelChange = (e) => {
     setInput((prevState) => ({
       ...prevState,
@@ -81,6 +81,7 @@ const UserForm = ({ onSubmit, isAdmin }) => {
             type={"password"}
             name="password"
           ></TextField>
+
           <Button
             sx={{ mt: 2, borderRadius: 10, bgcolor: "#2b2d42" }}
             type="submit"

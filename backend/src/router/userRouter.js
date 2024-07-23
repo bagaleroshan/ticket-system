@@ -4,10 +4,10 @@ import {
   deleteUser,
   getAllUsers,
   getBookingOfUser,
+  getUserById,
   loginUser,
-  readSpecificUser,
   updateUser,
-  verifyEmailUser
+  verifyEmailUser,
 } from "../controller/userController.js";
 
 const userRouter = Router();
@@ -16,12 +16,8 @@ userRouter.route("/").get(getAllUsers);
 userRouter.route("/signup").post(createUser);
 userRouter.route("/verify-emails").patch(verifyEmailUser);
 userRouter.route("/login").post(loginUser);
+// userRouter.route("/bookings/:id").get(getBookingOfUser);
+userRouter.route("/:id").get(getUserById).patch(updateUser).delete(deleteUser);
 userRouter.route("/bookings/:id").get(getBookingOfUser);
-
-userRouter
-  .route("/:id")
-  .get(readSpecificUser)
-  .patch(updateUser)
-  .delete(deleteUser);
 
 export default userRouter;

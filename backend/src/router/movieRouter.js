@@ -2,7 +2,7 @@ import express from "express";
 import {
   addMovie,
   getMovieById,
-  readAllMovie
+  readAllMovie,
 } from "../controller/movieController.js";
 const movieRouter = express.Router();
 movieRouter.route("/").post(addMovie).get(readAllMovie);

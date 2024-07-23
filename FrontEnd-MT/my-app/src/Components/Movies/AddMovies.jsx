@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import { addMovies } from "../api.helpers";
+import { useNavigate } from "react-router-dom";
 const labelProps = {
   mt: 1,
   mb: 1,
@@ -20,9 +21,9 @@ const AddMovies = () => {
     releaseDate: "",
     featured: false,
   });
-  const [actors, setActors] = useState([""]);
+  const [actors, setActors] = useState([]);
   const [actor, setActor] = useState("");
-
+const navigate=useNavigate()
   const handelChange = (e) => {
     setInputs((prevState) => ({
       ...prevState,
@@ -32,9 +33,10 @@ const AddMovies = () => {
   const handelSubmit = (e) => {
     e.preventDefault();
     console.log(inputs, actors);
-    addMovies({ ...inputs,  actors })
+    addMovies({ ...inputs, actors })
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
+      navigate("/movies")
   };
   return (
     <div>
@@ -50,7 +52,7 @@ const AddMovies = () => {
           <Typography textAlign={"center"} variant="h5" fontFamily={"verdana"}>
             Add New Movie
           </Typography>
-          <FormLabel sx={{ labelProps }}></FormLabel>
+          <FormLabel sx={{ labelProps }}>Title</FormLabel>
           <TextField
             value={inputs.title}
             onChange={handelChange}
@@ -76,6 +78,7 @@ const AddMovies = () => {
           ></TextField>
           <FormLabel sx={{ labelProps }}>Release Date</FormLabel>
           <TextField
+            type="date"
             value={inputs.releaseDate}
             onChange={handelChange}
             name="releaseDate"
@@ -99,31 +102,31 @@ const AddMovies = () => {
             >
               Add
             </Button>
-            <FormLabel sx={{ labelProps }}>Featured</FormLabel>
-            <Checkbox
-              name="featured"
-              checked={inputs.featured}
-              onClick={(e) =>
-                setInputs((prevState) => ({
-                  ...prevState,
-                  featured: e.target.checked,
-                }))
-              }
-              sx={{ mr: "auto" }}
-            ></Checkbox>
-            <Button
-              type="submit"
-              variant="contained"
-              sx={{
-                width: "30%",
-                margin: "auto",
-                bgcolor: "#2b2d43",
-                ":hover": { bgcolor: "#121217" },
-              }}
-            >
-              Add New Movie
-            </Button>
           </Box>
+          <FormLabel sx={{ labelProps }}>Featured</FormLabel>
+          <Checkbox
+            name="featured"
+            checked={inputs.featured}
+            onClick={(e) =>
+              setInputs((prevState) => ({
+                ...prevState,
+                featured: e.target.checked,
+              }))
+            }
+            sx={{ mr: "auto" }}
+          ></Checkbox>
+          <Button
+            type="submit"
+            variant="contained"
+            sx={{
+              width: "30%",
+              margin: "auto",
+              bgcolor: "#2b2d43",
+              ":hover": { bgcolor: "#121217" },
+            }}
+          >
+            Add New Movie
+          </Button>
         </Box>
       </form>
     </div>

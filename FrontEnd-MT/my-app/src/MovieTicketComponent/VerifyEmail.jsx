@@ -19,7 +19,8 @@ const VerifyEmail = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      navigate("/admin/login");
+      // navigate("/admin/login");
+      navigate("/login")
     } catch (error) {}
   };
   useEffect(() => {

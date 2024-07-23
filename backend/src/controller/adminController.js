@@ -204,19 +204,19 @@ export const getAdmins = async (req, res, next) => {
 //   }
 // };
 
-// export const getAdminById = async (req, res, next) => {
-//   try {
-//     let id = req.params._id;
-//     let result = await Admin.findById(id);
-//     res.status(200).json({
-//       success: true,
-//       message: "user read successfully.",
-//       result: result,
-//     });
-//   } catch (error) {
-//     res.status(400).json({
-//       success: false,
-//       message: error.message,
-//     });
-//   }
-// };
+export const getAdminById = async (req, res, next) => {
+  try {
+    let id = req.params.id;
+    let result = await Admin.findById(id).populate("addedMovies");
+    res.status(200).json({
+      success: true,
+      message: "user read successfully.",
+      result: result,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};

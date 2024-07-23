@@ -43,10 +43,10 @@ const MovieRoutes = () => {
             <>
               {" "}
               <Route
-                path="/userprofile"
+                path="/user"
                 element={<UserProfile></UserProfile>}
               ></Route>
-              <Route path="/booking/:id" element={<Booking></Booking>}></Route>
+              <Route path="/bookings/:id" element={<Booking></Booking>}></Route>
             </>
           )}
           {isAdminLoggedIn && !isUserLoggedIn && (

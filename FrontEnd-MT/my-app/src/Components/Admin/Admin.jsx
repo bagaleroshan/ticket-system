@@ -10,7 +10,7 @@ const Admin = () => {
   const onResReceive = (data) => {
     console.log(data);
     dispatch(adminActions.login());
-    localStorage.setItem("adminId", data.result._id);
+    localStorage.setItem("adminId", data.id);
     localStorage.setItem("token", data.token);
     navigate("/");
   };

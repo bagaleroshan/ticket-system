@@ -55,23 +55,23 @@ import { Booking, Movie, User } from "../schema/model.js";
 
 export const newBooking = async (req, res, next) => {
   const { movie, date, seatNumber, user } = req.body;
-  // let existingMovie;
+  let existingMovie;
   let existingUser;
-  // if (!mongoose.Types.ObjectId.isValid(movie)) {
-  //   return res.status(400).json({ message: "Invalid movie ID" });
-  // }
+  if (!mongoose.Types.ObjectId.isValid(movie)) {
+    return res.status(400).json({ message: "Invalid movie ID" });
+  }
   if (!mongoose.Types.ObjectId.isValid(user)) {
     return res.status(400).json({ message: "Invalid user ID" });
   }
   try {
-    // existingMovie = await Movie.findById(movie);
+    existingMovie = await Movie.findById(movie);
     existingUser = await User.findById(user);
   } catch (error) {
     return console.log(error);
   }
-  // if (!existingMovie) {
-  //   return res.status(404).json({ message: "Movie not found with given Id." });
-  // }
+  if (!existingMovie) {
+    return res.status(404).json({ message: "Movie not found with given Id." });
+  }
   if (!existingUser) {
     return res.status(404).json({ message: "user not found with given Id." });
   }
@@ -80,15 +80,15 @@ export const newBooking = async (req, res, next) => {
   try {
     booking = new Booking({
       movie,
-      date: new Date(date),
+      date: new Date(`${date}`),
       seatNumber,
       user,
     });
     await booking.save();
     existingUser.bookings.push(booking._id);
-    // existingMovie.bookings.push(booking._id);
+    existingMovie.bookings.push(booking._id);
     await existingUser.save();
-    // await existingMovie.save();
+    await existingMovie.save();
   } catch (err) {
     return console.log(err);
   }
@@ -117,7 +117,7 @@ export const getBookingById = async (req, res, next) => {
 export const deleteBooking = async (req, res, next) => {
   try {
     let id = req.params.id;
-    let result = await Booking.findByIdAndDelete(id);
+    let result = await Booking.findByIdAndDelete(id).populate("user movie");
     res.status(200).json({
       success: true,
       message: "user delete successfully",

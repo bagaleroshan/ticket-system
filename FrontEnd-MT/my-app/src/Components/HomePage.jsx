@@ -11,16 +11,15 @@ const HomePage = () => {
       .then((data) => setResult(data.result))
       .catch((err) => console.log(err));
   }, []);
-  //   console.log(result);
+  console.log(result);
   return (
-    <Box width={"100%"} height="100%" marginTop={2} margin="auto">
-      <Box margin={"auto"} width="80%" padding={2}>
+    <Box width={"100%"} height="100%" margin="auto" marginTop={2}>
+      <Box margin={"auto"} width="100%" height={"40%"} padding={2}>
         <img
-        
           src="https://img.freepik.com/free-vector/cinema-realistic-poster-with-illuminated-bucket-popcorn-drink-3d-glasses-reel-tickets-blue-background-with-tapes-vector-illustration_1284-77070.jpg?w=740&t=st=1715591960~exp=1715592560~hmac=e2ae45d3b1791f7e70d9261c8bc4e686c29b9bcb3694f0d68cf66fc1d98c0fcb"
-          alt="pasupatiparsad"
+          alt="movie"
           width={"100%"}
-          height={"40vh"}
+          height={"100%"}
         />
       </Box>
       <Box padding={5} margin="auto">

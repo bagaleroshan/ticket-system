@@ -10,7 +10,7 @@ const Movies = () => {
       .then((data) => setMovie(data.result))
       .catch((err) => console.log(err));
   }, []);
-  console.log(movie);
+  // console.log(movie);
 
   return (
     <Box margin={"auto"} marginTop={4}>
@@ -31,7 +31,7 @@ const Movies = () => {
         marginTop="10px"
         // display="flex-start"
         display={"flex"}
-        justifyContent="center"
+        justifyContent="flex-star"
         flexWrap={"wrap"}
       >
         {movie &&

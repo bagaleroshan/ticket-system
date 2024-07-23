@@ -20,25 +20,22 @@ const Header = () => {
   const isAdminLoggedIn = useSelector((state) => state.admin.isLoggedIn);
   const isUserLoggedIn = useSelector((state) => state.user.isLoggedIn);
 
-  // const dummyArray = ["nepali", "english", "hindi", "chinese"];
   const [value, setValue] = useState(0);
   const [movies, setMovies] = useState([]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [selectedMovie, setSelectedMovie] = useState();
   useEffect(() => {
     getAllMovies()
       // .then((data) => console.log(data))
-      .then((data) => setMovies(data.movies))
+      .then((data) => setMovies(data.result || []))
       .catch((err) => console.log(err));
   }, []);
   const logout = (isAdmin) => {
     dispatch(isAdmin ? adminActions.logout() : userActions.logout());
   };
   const handelChange = (e, val) => {
-    setSelectedMovie(val);
     const movie = movies.find((m) => m.title === val);
-    // console.log(movie)
+    console.log(movie);
     if (isUserLoggedIn) {
       navigate(`/bookings/${movie._id}`);
     }
@@ -48,7 +45,10 @@ const Header = () => {
       <Toolbar>
         <Box width={"20%"}>
           <IconButton LinkComponent={Link} to="/">
-            <MovieIcon />
+            <>
+              <MovieIcon />
+            MTBS
+            </>
           </IconButton>
         </Box>
         <Box width={"30%"} margin={"auto"}>
@@ -83,11 +83,7 @@ const Header = () => {
             )}
             {isUserLoggedIn && (
               <>
-                <Tab
-                  LinkComponent={Link}
-                  to="/userprofile"
-                  label="User Profile"
-                ></Tab>
+                <Tab LinkComponent={Link} to="/user" label="User Profile"></Tab>
                 <Tab
                   onClick={() => logout(false)}
                   LinkComponent={Link}

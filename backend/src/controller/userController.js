@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import { User } from "../schema/model.js";
+import { Booking, User } from "../schema/model.js";
 import { clientUrl, secretKey } from "../constant.js";
 import jwt from "jsonwebtoken";
 import { sendEmail } from "../utils/sendMail.js";
@@ -128,7 +128,7 @@ export const getAllUsers = async (req, res, next) => {
     });
   }
 };
-export const readSpecificUser = async (req, res, next) => {
+export const getUserById = async (req, res, next) => {
   try {
     let _id = req.params.id;
     let users = await User.findById(_id);
@@ -183,12 +183,12 @@ export const deleteUser = async (req, res, next) => {
 
 export const getBookingOfUser = async (req, res, next) => {
   try {
-    let _id = req.params.id;
-    let users = await User.findById(_id);
+    let id = req.params.id;
+    let result = await Booking.find({ user: id }).populate("movie");
     res.status(200).json({
       success: true,
       message: "user read successfully.",
-      result: users,
+      result: result,
     });
   } catch (error) {
     res.status(400).json({
@@ -197,7 +197,6 @@ export const getBookingOfUser = async (req, res, next) => {
     });
   }
 };
-
 
 // //40 min
 // import { User } from "../schema/model.js";

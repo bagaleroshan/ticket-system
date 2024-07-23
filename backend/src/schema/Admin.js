@@ -12,11 +12,11 @@ const adminSchema = Schema(
       required: true,
       minLength: 6,
     },
-   
+
     addedMovies: [
       {
         type: mongoose.Types.ObjectId,
-        ref:"Movie"
+        ref: "Movie",
       },
     ],
   },

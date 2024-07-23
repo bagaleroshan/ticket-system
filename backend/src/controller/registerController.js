@@ -27,8 +27,8 @@ export const createRegisterController = async (req, res, next) => {
       to: [data.email],
       subject: "Account Create.",
       html: `<h1>Your account has been created successfully.</h1>
-<a href="${clientUrl}/verify-email?token=${token}">
-"${clientUrl}/verify-email?token=${token}"
+      <a href="${clientUrl}/verify-email?token=${token}">
+     "${clientUrl}/verify-email?token=${token}"
 </a>
 `,
     });

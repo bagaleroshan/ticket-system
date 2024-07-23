@@ -1,23 +1,38 @@
-import mongoose from "mongoose";
+import jwt from "jsonwebtoken";
 import { secretKey } from "../constant.js";
 import { Admin, Movie } from "../schema/model.js";
-import jwt from "jsonwebtoken";
-import { decrypt } from "dotenv";
-import registerRouter from "../router/registerRouter.js";
 export const addMovie = async (req, res, next) => {
-  const token = req.headers.authorization.split(" ")[1];
-  if (!token && token.trim() === "") {
-    return res.status(404).json({ message: "Token not found" });
+  // const token = req.headers.authorization.split(" ")[1];
+  // if (!token && token.trim() === "") {
+  //   return res.status(404).json({ message: "Token not found" });
+  // }
+  // let adminId;
+  // jwt.verify(token, secretKey, (err, decrypted) => {
+  //   if (err) {
+  //     return res.status(400).json({ message: `${err.message}` });
+  //   } else {
+  //     adminId = decrypted.id;
+  //     return;
+  //   }
+  // });
+
+  const authHeader = req.headers.authorization;
+  if (!authHeader) {
+    return res.status(404).json({ message: "Authorization header not found" });
   }
+
+  const token = authHeader.split(" ")[1];
+  if (!token || token.trim() === "") {
+    return res.status(404).json({ message: "Token not found or invalid" });
+  }
+
   let adminId;
-  jwt.verify(token, secretKey, (err, decrypted) => {
-    if (err) {
-      return res.status(400).json({ message: `${err.message}` });
-    } else {
-      adminId = decrypted.id;
-      return;
-    }
-  });
+  try {
+    const decoded = jwt.verify(token, secretKey);
+    adminId = decoded.id;
+  } catch (err) {
+    return res.status(400).json({ message: `${err.message}` });
+  }
   const { title, description, releaseDate, posterUrl, featured, actors } =
     req.body;
   if (
@@ -166,7 +181,7 @@ export const addMovie = async (req, res, next) => {
 
 export const readAllMovie = async (req, res, next) => {
   try {
-    let result = await Movie.find({});
+    let result = await Movie.find();
     res.status(200).json({
       success: true,
       message: "Read movie ticket successfully.",
